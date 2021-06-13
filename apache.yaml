@@ -1,0 +1,8 @@
+name: apache play
+hosts: all
+task:
+  - name: update ubuntu package and install apache
+    apt:
+      name: apache2
+      update_cache: yes
+      state: present
