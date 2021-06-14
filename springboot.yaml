@@ -2,12 +2,13 @@
 - name: deploy springpetclinic as linux service
   hosts: all
   become: yes
-  task: 
+  tasks: 
     - name: update ubuntu packages and install java
       apt:
         name: openjdk-11-jdk
+        update_cache: yes
         state: present
-    - name: create spring petclinic directory
+    - name: create springpetclinic directory
       file:
         path: /usr/share/springpetclinic
         state: directory
@@ -25,13 +26,14 @@
         path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
         owner: springbootuser
         mode: '500'
-    - name : copy the service file
+    - name: copy the service file
       copy:
         dest: /etc/systemd/system/springpetclinic.service
         src: springpetclinic.service 
-    - name: enable and start spring petclinic 
-	    systemd:
-	      name: springpetclinic.service 
-	      enabled: yes
-	      state: started  
+    - name: enable and start springpetclinic 
+      systemd:
+        name: springpetclinic.service 
+        enabled: yes
+        state: started 
+      
       
